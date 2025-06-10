@@ -9,6 +9,8 @@ export default function Home() {
     setTodo(e.target.value);
   }
 
+  console.log("data>>", data)
+
   function onsubmitHandler() {
     if (todo.trim()) {
       setData((prev) => [...prev, todo]);
@@ -38,7 +40,7 @@ export default function Home() {
             value={todo}
             onChange={handleChange}
             placeholder="Add your task..."
-            className="flex-grow px-4 py-3 rounded-xl shadow-md border border-gray-300 focus:outline-none focus:ring-2 focus:ring-green-500 transition"
+            className="flex-grow text-black px-4 py-3 rounded-xl shadow-md border border-gray-300 focus:outline-none focus:ring-2 focus:ring-green-500 transition"
             onKeyDown={(e: React.KeyboardEvent<HTMLInputElement>) => {
               if (e.key === "Enter") {
                 e.preventDefault();
