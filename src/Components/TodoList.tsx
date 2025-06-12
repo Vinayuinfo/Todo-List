@@ -9,8 +9,6 @@ const TodoList = () => {
     setTodo(e.target.value);
   }
 
-  console.log("data>>", data);
-
   function onsubmitHandler() {
     if (todo.trim()) {
       setData((prev) => [...prev, todo]);

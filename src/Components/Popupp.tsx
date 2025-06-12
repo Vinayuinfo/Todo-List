@@ -1,4 +1,3 @@
-import { usePassword } from "@/app/Context/password";
 import Image from "next/image";
 
 interface PropsType {
@@ -22,10 +21,6 @@ interface PropsType {
 }
 
 const Popupp: React.FC<PropsType> = ({ setIsOpen, view }) => {
-  const { userPassword } = usePassword();
-
-  console.log("UserPassword is >>> ", userPassword);
-
   if (!view) return null;
   return (
     <div>
