@@ -44,6 +44,7 @@ const TestApi = () => {
   const [isOpen, setIsOpen] = useState(false);
   const [loading, setLoading] = useState(false);
   const [localSetByUser, setLocalSetByUser] = useState("");
+  const [inputValue, setInputValue] = useState("");
 
   const {
     removePassword,
@@ -81,11 +82,11 @@ const TestApi = () => {
       setView({
         image: pageview.image,
         username: pageview.username,
-        firstName: pageview.firstName, // or get from somewhere if available
+        firstName: pageview.firstName,
         lastName: pageview.lastName,
         email: pageview.email,
         phone: pageview.phone,
-        userAgent: navigator.userAgent, // if needed
+        userAgent: navigator.userAgent,
         role: pageview.role,
         address: pageview.address,
       });
@@ -102,25 +103,31 @@ const TestApi = () => {
         </div>
         <div className="flex gap-2 items-center">
           <div>
-            <p>Please Enter Your Id</p>
+            {localSetByUser !== "1559" ? (
+              <p>Please Enter Corrrect Id to Show a Button</p>
+            ) : (
+              ""
+            )}
             <input
+              value={inputValue}
               onChange={(e) => {
+                setInputValue(e.target.value);
                 setLocalSetByUser(e.target.value);
               }}
               className={
                 localSetByUser === "1559"
                   ? "border"
-                  : "border-8  border-red-500"
+                  : "border-2  border-red-500"
               }
             />
             <button
               type="submit"
               className={
                 setLocalStoragePassword
-                  ? "bg-green-600 text-white px-6 py-2 rounded-lg hover:bg-green-700 transition-all shadow-md"
+                  ? "bg-green-600 cursor-pointer disabled:cursor-not-allowed text-white px-6 py-2 rounded-lg hover:bg-green-700 transition-all shadow-md"
                   : "hidden"
               }
-              // disabled={localSetByUser === "1559"}
+              hidden={localSetByUser.trim() !== "1559"}
               onClick={() => {
                 getLocalid();
               }}
@@ -134,6 +141,7 @@ const TestApi = () => {
                 onClick={() => {
                   SetUserData([]);
                   removePassword();
+                  setInputValue("");
                 }}
                 className="cursor-pointer bg-green-600 p-2 text-white rounded-lg hover:bg-green-700 transition-all shadow-md"
               >
@@ -143,6 +151,8 @@ const TestApi = () => {
           )}
         </div>
       </div>
+
+      {/* {localSetByUser !== "1559" ? <p>Please Correct Id Enter</p> : ""} */}
 
       {userData && userData.length > 0 ? (
         <div className="overflow-x-auto rounded-xl shadow-lg bg-white">
@@ -154,7 +164,7 @@ const TestApi = () => {
                 <th className="p-3 text-left">Email</th>
                 <th className="p-3 text-left">Phone</th>
                 <th className="p-3 text-left">Address</th>
-                <th className="p-3 text-left"></th>
+                <th className="p-3 text-left">Op</th>
               </tr>
             </thead>
             <tbody>
@@ -202,8 +212,8 @@ const TestApi = () => {
       ) : (
         <div className="flex flex-col text-center">
           <p className="text-xl">No data Avialble? Ok two step Follow</p>
-          <p>first is GetData</p>
-          <p>Secound is Click set local and click get data</p>
+          {/* <p>first is GetData</p> */}
+          <p>Set Your Id and Get Data</p>
         </div>
       )}
 
