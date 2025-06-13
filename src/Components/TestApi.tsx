@@ -69,9 +69,10 @@ const TestApi = () => {
       } finally {
         console.log("Fetch attempt completed.");
         setLoading(false);
+        removePassword();
       }
     } else {
-      console.log("Invalid ID: Access denied or missing 'id' in localStorage.");
+      console.log("Invalid ID: Access denied.");
     }
   }
 
@@ -93,13 +94,11 @@ const TestApi = () => {
     }
   }
 
-  console.log("SetLocalByUser>>", localSetByUser);
-
   return (
     <div className="relative p-6 md:p-10 bg-gradient-to-br from-green-50 to-green-100 min-h-screen">
       <div className="flex justify-between items-center">
         <div className="text-2xl md:text-4xl font-bold text-green-800 mb-6 animate-fade-in">
-          🌿 Registration Form
+          🌿 Login To Data Show
         </div>
         <div className="flex gap-2 items-center">
           <div>
@@ -108,32 +107,37 @@ const TestApi = () => {
             ) : (
               ""
             )}
-            <input
-              value={inputValue}
-              onChange={(e) => {
-                setInputValue(e.target.value);
-                setLocalSetByUser(e.target.value);
-              }}
-              className={
-                localSetByUser === "1559"
-                  ? "border"
-                  : "border-2  border-red-500"
-              }
-            />
-            <button
-              type="submit"
-              className={
-                setLocalStoragePassword
-                  ? "bg-green-600 cursor-pointer disabled:cursor-not-allowed text-white px-6 py-2 rounded-lg hover:bg-green-700 transition-all shadow-md"
-                  : "hidden"
-              }
-              hidden={localSetByUser.trim() !== "1559"}
-              onClick={() => {
-                getLocalid();
-              }}
-            >
-              setlocal
-            </button>
+            <div className="flex gap-2">
+              <div>
+                <input
+                  value={inputValue}
+                  onChange={(e) => {
+                    setInputValue(e.target.value);
+                    setLocalSetByUser(e.target.value);
+                  }}
+                  className={
+                    localSetByUser === "1559"
+                      ? "border"
+                      : "border-2  border-red-500"
+                  }
+                />
+                {localSetByUser === "1559" ? (
+                  <p>Click Login and Click Get Data</p>
+                ) : (
+                  ""
+                )}
+              </div>
+              <button
+                type="submit"
+                className="bg-green-600 cursor-pointer disabled:cursor-not-allowed text-white px-6 py-2 rounded-lg hover:bg-green-700 transition-all shadow-md"
+                hidden={localSetByUser.trim() !== "1559"}
+                onClick={() => {
+                  getLocalid();
+                }}
+              >
+                Login
+              </button>
+            </div>
           </div>
           {userData && userData.length > 0 && (
             <div>
@@ -143,9 +147,9 @@ const TestApi = () => {
                   removePassword();
                   setInputValue("");
                 }}
-                className="cursor-pointer bg-green-600 p-2 text-white rounded-lg hover:bg-green-700 transition-all shadow-md"
+                className="cursor-pointer bg-green-600 p-3.5 text-white rounded-lg hover:bg-green-700 transition-all shadow-md"
               >
-                Clear Data
+                Logout
               </button>
             </div>
           )}
@@ -217,11 +221,12 @@ const TestApi = () => {
         </div>
       )}
 
-      {userData.length === 0 ? (
+      {userData.length === 0 && localSetByUser === "1559" ? (
         <div className="mt-6 flex justify-center">
           <button
             onClick={getFetching}
-            className="bg-green-600 cursor-pointer text-white px-6 py-2 rounded-lg hover:bg-green-700 transition-all shadow-md"
+            hidden={localSetByUser !== "1559"}
+            className="bg-green-600 disabled:cursor-not-allowed cursor-pointer text-white px-6 py-2 rounded-lg hover:bg-green-700 transition-all shadow-md"
           >
             {loading === true ? "Loading.." : "GetData"}
           </button>
