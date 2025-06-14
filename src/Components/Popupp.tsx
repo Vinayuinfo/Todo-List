@@ -25,7 +25,7 @@ const Popupp: React.FC<PropsType> = ({ setIsOpen, view }) => {
   return (
     <div className="">
       <div className="popup-overlay fixed inset-0 bg-transparent bg-opacity-50 backdrop-blur-sm flex justify-center items-center z-50">
-        <div className="bg-white p-6 rounded-2xl shadow-lg max-w-xl w-full">
+        <div className="bg-white p-6 m-6 sm:m-0 rounded-2xl shadow-lg max-w-xl w-full">
           <div>
             <Image
               src={view?.image}
